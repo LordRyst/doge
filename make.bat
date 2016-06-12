@@ -1,0 +1,1 @@
+g++ -o websocket_chat.exe amap.cpp players.cpp uid.cpp websocket_chat.c mongoose.o -lws2_32
