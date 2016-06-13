@@ -6,12 +6,7 @@
 
 using namespace std;
 
-struct Message {
-	mg_connection* player;
-	char* data;
-	int size;
-};
-
 void MessagesAdd(mg_connection* mg_conn, char* data, int size);
+void messages1Byte(mg_connection* mg_conn, char* data, int size);
 
 #endif

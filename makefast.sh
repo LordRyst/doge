@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ccache g++ -Og -march=native -Wall -Werror -o server.out messages.cpp mongoose.c websocket_chat.c players.cpp amap.cpp game.cpp
+ccache g++ -Ofast -march=native -Wall -Werror -o server.out messages.cpp mongoose.c websocket_chat.c players.cpp amap.cpp game.cpp
 
 if [ $? = 0 ]; then
     cppcheck .
