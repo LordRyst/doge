@@ -31,8 +31,6 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     }
     case MG_EV_WEBSOCKET_FRAME: {
       struct websocket_message *wm = (struct websocket_message *) ev_data;
-      /* New websocket message. Tell everybody. */
-      struct mg_str d = {(char *) wm->data, wm->size};
       //broadcast(nc, d);
 	  MessagesAdd(nc, (char *) wm->data, wm->size);
       break;
