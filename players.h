@@ -3,7 +3,7 @@
 
 #include "uid.h"
 #include <map>
-#include "mongoose.h"
+#include <string.h>
 
 using namespace std;
 
@@ -13,8 +13,8 @@ struct Player {
 	float size;
 };
 
-void PlayersAdd(mg_connection* mg_conn);
+void PlayersAdd(void* mg_conn);
 
-void PlayersRemove(mg_connection* mg_conn);
+void PlayersRemove(void* mg_conn);
 
 #endif

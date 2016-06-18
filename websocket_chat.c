@@ -26,20 +26,20 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     case MG_EV_WEBSOCKET_HANDSHAKE_DONE: {
       /* New websocket connection. Tell everybody. */
       //broadcast(nc, mg_mk_str("++ joined"));
-	  PlayersAdd(nc);
+      PlayersAdd((void*)nc);
       break;
     }
     case MG_EV_WEBSOCKET_FRAME: {
       struct websocket_message *wm = (struct websocket_message *) ev_data;
       //broadcast(nc, d);
-	  MessagesAdd(nc, (char *) wm->data, wm->size);
+      MessagesAdd((void *)nc, (char *) wm->data, wm->size);
       break;
     }
     case MG_EV_CLOSE: {
       /* Disconnect. Tell everybody. */
       if (is_websocket(nc)) {
         //broadcast(nc, mg_mk_str("-- left"));
-		PlayersRemove(nc);
+	PlayersRemove((void*)nc);
       }
       break;
     }
