@@ -6,7 +6,7 @@
 #define FORWARD 0
 #define BACKWARD 0
 
-void MessagesAdd(mg_connection* mg_conn, char* data, int size){
+void MessagesAdd(void* mg_conn, char* data, int size){
   int remains = size;
   while (remains > 0) {
     int shift = size - remains;
@@ -29,7 +29,7 @@ void MessagesAdd(mg_connection* mg_conn, char* data, int size){
   };
 }
 
-void messages1Byte(mg_connection* mg_conn, char* data, int size) {
+void messages1Byte(void* mg_conn, char* data, int size) {
   char type = data[0] & 255;
   switch (type) {
   case FORWARD:

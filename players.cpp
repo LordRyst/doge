@@ -1,12 +1,16 @@
 #include "players.h"
+#ifndef NDEBUG
+#include "stdio.h"
+#endif
 
-map < mg_connection*, Index > playerMgrIndexes;
-map <Index, mg_connection*> playerMgrReverse;
+
+map <void*, Index > playerMgrIndexes;
+map <Index, void*> playerMgrReverse;
 Player* playerMgrVector = new Player[8];
 Index playerMgrSize = 0;
 Index playerMgrCapacity = 8;
 
-void PlayersAdd(mg_connection* mg_conn){
+void PlayersAdd(void* mg_conn){
 	if (playerMgrCapacity == playerMgrSize) {
 		Player* copy =  new Player[playerMgrCapacity << 1];
 		memcpy(copy, playerMgrVector, playerMgrCapacity * sizeof(Player));
@@ -23,10 +27,12 @@ void PlayersAdd(mg_connection* mg_conn){
 	player->location[2] = 0;
 	player->size = 0;
 	playerMgrSize++;
+#ifndef NDEBUG	
 	printf("Player added.\n");
+#endif
 }
 
-void PlayersRemove(mg_connection* mg_conn){
+void PlayersRemove(void* mg_conn){
 	Index loc = playerMgrIndexes[mg_conn];
 	Player* player = &playerMgrVector[loc];
 	player->location[0] = 0;
@@ -35,7 +41,7 @@ void PlayersRemove(mg_connection* mg_conn){
 	player->size = 0;
 	if (loc < playerMgrSize - 1) {
 		playerMgrVector[loc] = playerMgrVector[playerMgrSize - 1];
-		mg_connection* swapped = playerMgrReverse[playerMgrSize - 1];
+		void* swapped = playerMgrReverse[playerMgrSize - 1];
 		playerMgrIndexes[swapped] = loc;
 		playerMgrReverse[loc] = swapped;
 	}
