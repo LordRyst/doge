@@ -1,0 +1,7 @@
+Example of play that support many levels of players. Arag.io allows multiple players of different skill and power by making higher level players slower. Players can compensate for skill by simply selecting for faster every time, but combat will take longer. Players with more skill will be able to select other abilities like HP, attack, defense, and regeneration to handle special abilities.
+
+Attributes: Speed, Small, Attack, Special, Defense
+
+As a player gains points, they grow and get slower. IE, they maintain max energy. During any given combat, players gain or lose points. If they get enough points to buy a blob they have encountered, they can buy one. Example of play. Players are a type of low level creature. They can go out into a field, with berry bushes and larger monsters. They are told they need to gather berries from the plants, while avoiding the larger creatures. When they get back to a safe spot, they can use points gathered to 
+
+Alternative. Players are playing an RPG, where monsters constantly spawn. As they defeat them, they drop items that they use. Players can defeat a boss to get top items. Bosses spawn from revealed boss locations. When defeated, that area is no longer a boss area, but may spawn one. Players collect energy in the form of money or items. That energy is removed from the area, and then re-deposited into cities during trades. Cities slowly lose energy back into the environment. Bosses near cities are known as bandit camps. I don't like this ideas as much, as the other can be made into a non-violent setup.
