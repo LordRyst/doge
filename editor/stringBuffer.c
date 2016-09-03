@@ -109,6 +109,10 @@ void moveCursorDown() {
   }
   if (_currentString->string[_currentOffset] == '\n') {
     offset++;
+  }
+  while (moveCursorRight() && _currentString->string[_currentOffset] != '\n') {
+  }
+  for (offset; offset > 0 && moveCursorRight() && _currentString->string[_currentOffset] != '\n'; offset--);
 }
 
 char** printScreen(int xSize, int ySize,
@@ -146,12 +150,99 @@ char** printScreen(int xSize, int ySize,
   }
 }
 
-char moveCursorUp();
+char atEndOfString() {
+  int length = lengthOfString(_currentString);
+  return _currentOffset == length - 1;
+}
 
-char moveCursorDown();
-char moveCursorLeft();
-char moveCursorRight();
-void insertChar(char ch);
+inline int lengthOfString(_string theString) {
+  return _theString->nextMemory.string - _currentString->string;
+}
+
+char isStringFree(_string check) {
+  if (_smallString) {
+    _string point = _smallString;
+    while (point && point != check) {
+      point = point->nextSize();
+    }
+    if (point && point == check) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void swapSize(_string first, _string second) {
+  _string prev = first->prevSize;
+  _string next = second->nextSize;
+  if (prev) {
+    prev->nextSize = second;
+  }
+  if (next) {
+    next->prevSize = first;
+  }
+  first->prevSize = second;
+  first->nextSize = next;
+  second->prevSize = prev;
+  second->nextSize = first;
+}
+
+void deleteString(_string begone) {
+  for (int i = 0; i < _stringHeapTop; i++) {
+    if (_stringHeap[i] == begone) {
+      _string top = _stringHeap[--_stringHeapTop];
+      if (begone->nextSize) {
+	begone->nextSize->prevSize = begone->prevSize;
+      }
+      if (begone->prevSize) {
+	begone->prevSize->nextSize = begone->nextSize;
+      }
+      
+    }
+  }
+}
+
+void extendStringForward(_string toExtend) {
+  _string nextMemory = toExtend->nextMemory;
+  if (nextMemory && isStringFree(nextMemory)) {
+    if (lengthOfString(nextMemory) > 1) { //shorted, and make sure memory is sorted.
+      nextMemory->string++;
+      int length = lengthOfString(nextMemory);
+      _string larger = nextMemory->prevSize;
+      while (larger && lengthOfString(larger) > length) {
+	//swap places in size;
+	swapSize(larger, nextMemory);
+	larger = larger->prevSize;
+      }
+    } else { //String Size 1
+      nextMemory->string++;
+      
+    }
+  }
+}
+
+void extendStringBackward(_string toExtend) {
+  
+}
+
+void insertChar(char ch) {//most likely at beginning of string
+  if (_currentOffset == 0) {
+    _string memPrev = _currentString->prevMemory;
+    if (isStringFree(memPrev)) {
+      if (lengthOfString(memPrev) > 1) {
+	_currentString->string--;
+	_currentString->string[0] = ch;
+	//check if prevMem needs moved to be a smaller size;
+      } else {//string size one, delete.
+	if (memPrev->prevMemory) {
+	  memPrev->prevMemory->nextMemory = _currentString;
+	}
+	
+      }
+    }
+  }
+}
+
 void deleteChar();
 void backspace();
 int getLineIndex();

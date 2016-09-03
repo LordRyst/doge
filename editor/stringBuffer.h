@@ -15,6 +15,7 @@ struct _string{
 
 _string _stringHeap[];
 int _stringHeapSize;
+int _stringHeapTop;
 _string* _firstString;
 _string* _lastString;
 _string* _smallString;
@@ -22,9 +23,13 @@ _string* _largeString;
 _string* _currentString;
 int _currentOffset;
 
+void _removeFromStrings(_string begone);
+char atEndOfString();
+int lengthOfString(_string theString);
+void _scoochAndInsert(char ch);
 char** printScreen(int xSize, int ySize, char cursor, char wiki);
-char moveCursorUp();
-char moveCursorDown();
+void moveCursorUp();
+void moveCursorDown();
 char moveCursorLeft();
 char moveCursorRight();
 void insertChar(char ch);
