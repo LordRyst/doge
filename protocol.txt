@@ -1,0 +1,17 @@
+Chain of bytes where the first byte in each sequence tells the size or the remaining message. Only the first 4 bits are used for size. The total message lengthis 2^nibble. For example, if the value is 0, the the single byte is the entire message. If the first nibble is F, then it is converted to 0, and the second nible is right shifted for bits to create a new length. In this case the second byte tells its type.
+
+Messages
+0x00 Keepalive
+0x01 Up
+0x02 Down
+0x03 Left
+0x04 Right
+0x0X Spare
+
+0x1XXX Spare
+
+0x2XXXXXXX Spare
+
+0x3XXXXXXXXXXXXXXX
+
+0x4XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

@@ -3,18 +3,29 @@
   #include <stdio.h>
 #endif
 
-#define FORWARD 0
-#define BACKWARD 0
+vector <message> forward;
 
 void MessagesAdd(void* mg_conn, char* data, int size){
   int remains = size;
   while (remains > 0) {
     int shift = size - remains;
     char code = data[shift] >> 4;
+    char type = data[shift] & 16;
     char* address = data + shift;
     switch (code) {
     case 0:
-      messages1Byte(mg_conn, address, 1);
+      switch (type) {
+      case 0: // FORWARD
+	forward.push_back(message());
+	forward[forward.size() - 1].mg_conn = mg_conn;
+	forward[forward.size() - 1].data = address;
+	break;
+#ifndef NDEBUG
+      default:
+	printf("MessagesAdd bad type.\n");
+	break;
+#endif
+      }
       break;
     case 1:
       //messages2Bytes(mg_conn, address, 2);
@@ -27,13 +38,4 @@ void MessagesAdd(void* mg_conn, char* data, int size){
     }
     remains -= 1 << code;
   };
-}
-
-void messages1Byte(void* mg_conn, char* data, int size) {
-  char type = data[0] & 255;
-  switch (type) {
-  case FORWARD:
-    //MovementMgrAddForward(mg_conn);
-    break;
-  }
 }
